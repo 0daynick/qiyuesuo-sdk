@@ -184,7 +184,7 @@ class Client extends BaseClient
     }
 
     /**
-     * 回调地址测试是否可用
+     * 触发回调地址测试请求
      *
      * @param $signCallBackUrl
      * @return mixed|\Psr\Http\Message\ResponseInterface
