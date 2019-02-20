@@ -35,8 +35,10 @@ class BaseTestCase extends TestCase
     {
         $this->assertEquals(200, $result->getStatusCode());
 
-        if($result->getStatusCode() !== 200){
+        if($result->getStatusCode() === 200){
             $data = $this->getManager()->format($result);
+
+            var_dump($data);
 
             $this->assertEquals($data['code'], 0);
         }

@@ -25,7 +25,27 @@ class ContractTest extends BaseTestCase
             ->contract
             ->createByHtml([
                 'subject' => '购销合同',
+                'docName' => '购销合同',
                 'html' => $this->getFile('html.txt', true),
+            ]);
+
+        $this->assertApiReqSuccess($result);
+    }
+
+    /**
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function testCreateContractByTemplate()
+    {
+        $result = $this->getManager()
+            ->contract
+            ->createByTpl([
+                'subject' => '购销合同',
+                'docName' => '购销合同',
+                'templateId' => '2535674180990902904',
+                'templateParams' => json_encode([
+                    'order' => $this->getFile('test.txt', true)
+                ])
             ]);
 
         $this->assertApiReqSuccess($result);
@@ -51,6 +71,20 @@ class ContractTest extends BaseTestCase
                 'sealImageBase64' => $this->getFile('seal.txt', true),
                 'successUrl' => 'http://www.baidu.com'
             ]);
+
+        $this->assertApiReqSuccess($result);
+    }
+
+    /**
+     * 查看合同
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function testViewUrl()
+    {
+        $result = $this->getManager()
+            ->contract
+            ->viewUrl('2535680869307753119');
 
         $this->assertApiReqSuccess($result);
     }
@@ -82,7 +116,6 @@ class ContractTest extends BaseTestCase
 
         $this->assertApiReqSuccess($result);
     }
-
 
     /**
      * 下载合同

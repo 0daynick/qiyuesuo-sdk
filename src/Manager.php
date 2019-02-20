@@ -90,6 +90,8 @@ class Manager extends ServiceContainer
             $option['query'] = $params;
         }
 
+        var_dump($option);
+
         $result =  $this->getHttpClient()->request($method, $this->url($url), $option);
 
         return $result;
