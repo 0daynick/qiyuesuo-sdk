@@ -19,6 +19,16 @@ use OverNick\Support\Config;
  */
 class Manager extends ServiceContainer
 {
+    /**
+     * @var array 请求选项
+     */
+    protected $options = [];
+
+    /**
+     * @var string 获取请求返回的原数据
+     */
+    protected $response;
+
     protected $providers = [
         Providers\Seal\ServiceProvider::class,
         Providers\Auth\ServiceProvider::class,
@@ -49,15 +59,16 @@ class Manager extends ServiceContainer
     {
         $time = $this->getMicroTime();
 
-        $option = [
+        $option = array_merge($this->options, [
             'headers' => [
                 'x-qys-open-timestamp' => $time,
                 'x-qys-open-signature' => $this->getSign($time),
                 'x-qys-open-accesstoken' => $this->config->get('token')
             ],
             'http_errors' => false,
-            'verify' => false
-        ];
+            'verify' => false,
+            'timeout' => 10
+        ]);
 
         if(strtoupper($method) == QiYueSuo::METHOD_POST){
 
@@ -109,12 +120,36 @@ class Manager extends ServiceContainer
     /**
      * 格式化输出
      *
-     * @param string $result
+     * @param \Psr\Http\Message\ResponseInterface $result
+     * @return array
+     */
+    public function format(\Psr\Http\Message\ResponseInterface $result) : array
+    {
+        $this->response = $result->getBody()->getContents();
+
+        return json_decode($this->response, true);
+    }
+
+    /**
+     * 设置请求内容
+     *
+     * @param array $options
+     * @return $this
+     */
+    public function setRequestOptions(array $options = [])
+    {
+        $this->options = $options;
+        return $this;
+    }
+
+    /**
+     * 获取请求格式化前的原数据
+     *
      * @return string
      */
-    public function format(string $result) : string
+    public function getRequestResponse()
     {
-        return json_decode($result);
+        return $this->response;
     }
 
     /**

@@ -134,6 +134,22 @@ class Client extends BaseClient
     }
 
     /**
+     * 下载合同
+     *
+     * @param string $documentId 合同编号
+     *
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function download($documentId)
+    {
+        return $this->app->request(
+            'remote/document/download',
+            ['documentId' => $documentId]
+        );
+    }
+
+    /**
      * 获取签署页面链接
      *
      * @param array $params

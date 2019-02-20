@@ -13,7 +13,16 @@ class QiYueSuo
     const METHOD_POST = 'POST';
     const METHOD_GET = 'GET';
 
-    const TYPE_COMPANY = 1;
-    const TYPE_USER = 2;
+    /**
+     * 用户类型
+     */
+    const TYPE_COMPANY = 'COMPANY';
+    const TYPE_USER = 'PERSONAL';
+
+    /**
+     * 签署操作类型
+     */
+    const SIGN_TYPE_PC = 'SIGN';
+    const SIGN_TYPE_WAY = 'SIGNWITHPIN';
 
 }

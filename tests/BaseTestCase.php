@@ -27,4 +27,31 @@ class BaseTestCase extends TestCase
         }
         return $this->manager;
     }
+
+    /**
+     * @param \Psr\Http\Message\ResponseInterface $result
+     */
+    public function assertApiReqSuccess(\Psr\Http\Message\ResponseInterface $result)
+    {
+        $this->assertEquals(200, $result->getStatusCode());
+
+        if($result->getStatusCode() !== 200){
+            $data = $this->getManager()->format($result);
+
+            $this->assertEquals($data['code'], 0);
+        }
+    }
+
+    /**
+     * @param $file
+     * @param $read
+     *
+     * @return string
+     */
+    public function getFile($file, $read = false)
+    {
+        $path = __DIR__ . DIRECTORY_SEPARATOR . 'files/' . $file;
+
+        return $read ? file_get_contents($path) : $path;
+    }
 }

@@ -12,22 +12,6 @@ use OverNick\QiYueSuo\QiYueSuo;
  */
 class Client extends BaseClient
 {
-
-    /**
-     * 获取[用户/公司]下的印章
-     *
-     * @param string $sealId    用户或企业标识
-     *
-     * @return mixed|\Psr\Http\Message\ResponseInterface
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
-    public function getSeals(string $sealId)
-    {
-        return $this->app->request('seal', [
-            'sealId' => $sealId
-        ]);
-    }
-
     /**
      * 创建印章
      *

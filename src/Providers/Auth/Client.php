@@ -24,7 +24,12 @@ class Client extends BaseClient
      */
     public function company($params)
     {
-        return $this->app->request('third/company/auth/full', $params, QiYueSuo::METHOD_POST);
+        return $this->app->request(
+            'third/company/auth/full',
+            $params,
+            QiYueSuo::METHOD_POST,
+            ['license', 'operAuthorization']
+        );
     }
 
     /**
