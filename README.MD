@@ -2,6 +2,8 @@
 
 https://open.qiyuesuo.com/document/2279605638927482880
 
+## 配置（config）
+使用文件 `config/qiyuesuo.php` 作为项目启动参数，或复制文件中数组作为启动参数，参数说明详见文件注释
 
 ## 使用（Used）
 
@@ -13,7 +15,8 @@ $manager = new OverNick\QiYueSuo\Manager([
     // 沙箱模式，true表示对接到测试地址
     'sandbox' => true,
     'token' => '契约锁开放平台获取的token',
-    'secret' => '契约锁开放平台获取的secret'
+    'secret' => '契约锁开放平台获取的secret'，
+    'client' => true
 ])->bootstrapHttpClient();
 
 // 合同
