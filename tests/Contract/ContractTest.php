@@ -58,10 +58,12 @@ class ContractTest extends BaseTestCase
      */
     public function testSignUrl()
     {
+        $documentId = '2535387873905738486';
+
         $result = $this->getManager()
             ->contract
             ->signUrl([
-                'documentId' => '2535387873905738486',
+                'documentId' => $documentId,
                 'operation' => QiYueSuo::SIGN_TYPE_PC,
                 'signer' => json_encode([
                     'type' => QiYueSuo::TYPE_COMPANY,
@@ -82,9 +84,11 @@ class ContractTest extends BaseTestCase
      */
     public function testViewUrl()
     {
+        $documentId = '2535680869307753119';
+
         $result = $this->getManager()
             ->contract
-            ->viewUrl('2535680869307753119');
+            ->viewUrl($documentId);
 
         $this->assertApiReqSuccess($result);
     }
@@ -96,9 +100,11 @@ class ContractTest extends BaseTestCase
      */
     public function testSignComplete()
     {
+        $documentId = '2535387873905738486';
+
         $result = $this->getManager()
             ->contract
-            ->complete('2535387873905738486');
+            ->complete($documentId);
 
         $this->assertApiReqSuccess($result);
     }
@@ -110,9 +116,11 @@ class ContractTest extends BaseTestCase
      */
     public function testFindContract()
     {
+        $documentId = '2535387873905738486';
+
         $result = $this->getManager()
             ->contract
-            ->find('2535387873905738486');
+            ->find($documentId);
 
         $this->assertApiReqSuccess($result);
     }
@@ -124,12 +132,14 @@ class ContractTest extends BaseTestCase
      */
     public function testDownloadContract()
     {
+        $documentId = '2535387873905738486';
+
         $result = $this->getManager()
             ->setRequestOptions([
                 'sink' => $this->getFile('downloads/show.pdf')
             ])
             ->contract
-            ->download('2535387873905738486');
+            ->download($documentId);
 
         $this->assertEquals($result->getStatusCode(), 200);
     }

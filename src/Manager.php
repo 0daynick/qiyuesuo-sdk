@@ -3,7 +3,6 @@ namespace OverNick\QiYueSuo;
 
 use GuzzleHttp\Client;
 use OverNick\QiYueSuo\Kernel\ServiceContainer;
-use OverNick\Support\Arr;
 use OverNick\Support\Config;
 
 /**
@@ -90,9 +89,7 @@ class Manager extends ServiceContainer
             $option['query'] = $params;
         }
 
-        var_dump($option);
-
-        $result =  $this->getHttpClient()->request($method, $this->url($url), $option);
+        $result =  $this->client->request($method, $this->url($url), $option);
 
         return $result;
     }
@@ -116,7 +113,9 @@ class Manager extends ServiceContainer
      */
     public function url( string $url = '')
     {
-        return ($this->config->get('sandbox', false) === true ? $this->testUrl :  $this->productUrl) . $url;
+        return ($this->config->get('sandbox', false) === true ? $this->testUrl : $this->productUrl) .
+            '/' .
+            ltrim($url, '/');
     }
 
     /**
@@ -168,19 +167,4 @@ class Manager extends ServiceContainer
             $time
         );
     }
-
-    /**
-     * 获取请求组件
-     *
-     * @return Client
-     */
-    public function getHttpClient()
-    {
-        if(!$this->offsetExists('client')){
-            $this->offsetSet('client', new Client());
-        }
-
-        return $this->client;
-    }
-
 }

@@ -14,7 +14,7 @@ $manager = new OverNick\QiYueSuo\Manager([
     'sandbox' => true,
     'token' => '契约锁开放平台获取的token',
     'secret' => '契约锁开放平台获取的secret'
-]);
+])->bootstrapHttpClient();
 
 // 合同
 // 实例指向 OverNick\QiYueSuo\Providers\Contract\Client

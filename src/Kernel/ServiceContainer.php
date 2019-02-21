@@ -1,11 +1,16 @@
 <?php
 namespace OverNick\QiYueSuo\Kernel;
 
+use GuzzleHttp\Client;
+use OverNick\QiYueSuo\Providers\HttpClientServiceProvider;
 use OverNick\Support\Config;
 use Pimple\Container;
 
 /**
- * 基类
+ * 组件基类
+ *
+ * @property Config $config
+ * @property Client $client
  *
  * Class ServiceContainer
  * @package OverNick\QiYueSuo\Kernel
@@ -23,7 +28,28 @@ class ServiceContainer extends Container
 
         parent::__construct([]);
 
+        if($this->config->get('client') === true){
+            $this->bootstrapHttpClient();
+        }
+
         $this->registerProviders($this->providers);
+    }
+
+    /**
+     * 启动请求组件
+     *
+     * @param Client $client
+     * @return $this
+     */
+    public function bootstrapHttpClient($client = null)
+    {
+        if($client instanceof Client){
+            $this->offsetSet('client', $client);
+        }else{
+            $this->register(new HttpClientServiceProvider);
+        }
+
+        return $this;
     }
 
     /**
